@@ -1,0 +1,22 @@
+{
+  "schemaPath": "./schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "prod": {
+        "url": "https://api2.hypi.io/graphql",
+        "headers": {
+          "hypi-domain": "latest.store.hypi.hypi.app"
+        },
+        "subscription": {
+          "url": "https://api2.hypi.io/graphql"
+        }
+      },
+      "dev": {
+        "url": "http://localhost:3000/graphql",
+        "subscription": {
+          "url": "https://api2.hypi.io/graphql"
+        }
+      }
+    }
+  }
+}

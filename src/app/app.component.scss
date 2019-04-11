@@ -1,10 +1,36 @@
 /*Google fonts*/
 @import url('https://fonts.googleapis.com/css?family=Raleway');
-body{
+
+
+$blue: #3732e3;
+$indigo: #7c01df;
+$purple: #1f0c33;
+$pink: #f74198 !default;
+$red: #f33648 !default;
+$orange: #fd7e14 !default;
+$yellow: #ffc107 !default;
+$green: #2ecb4e !default;
+$teal: #20e3ad !default;
+$cyan: #08e9d1 !default;
+$gray-30: #F3F3F4;
+$gray-100: #BEC0C5;
+$gray-900: #11182D;
+
+$primary: $indigo;
+$secondary: $gray-100;
+$success: $green;
+$info: $cyan;
+$warning: $orange;
+$danger: $red;
+$light: $gray-30;
+$dark: $gray-900;
+
+body {
   padding: 0;
   margin: 0;
 }
-form{
+
+form {
   max-width: 30em;
   margin: 4em auto;
   position: relative;
@@ -12,32 +38,46 @@ form{
   padding: 2em 3em;
   overflow: hidden;
 }
-form h1{
+
+form h1 {
   font-family: "Raleway";
-  color:#F97300;
+  color: $primary;
+
+  .badge {
+    position: absolute;
+    font-size: 50%;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+  }
 }
-form input[type=text]::placeholder{
+
+form input[type=text]::placeholder {
   font-family: "Raleway";
-  color:#666;
+  color: #666;
 }
-form .data{
-  margin-top: 1em;
+
+form .data {
+  margin-top: .21em;
 }
-form .data li{
+
+form .data li {
   background: #fff;
-  border-left: 4px solid #F97300;
-  padding: 1em;
+  border-left: 4px solid $primary;
+  padding: .21em;
   margin: 1em auto;
   color: #666;
   font-family: "Raleway";
 }
-form .data li i{
+
+form .data li i {
   float: right;
   color: #888;
   cursor: pointer;
 }
-form .input-group-text{
-  background: #F97300;
+
+form .add-button {
+  background: $primary;
   border-radius: 50%;
   width: 5em;
   height: 5em;
@@ -47,14 +87,19 @@ form .input-group-text{
   right: 13px;
   top: 68px;
   cursor: pointer;
+  box-shadow: 0px 0px 6px #7b06df66;
 }
-form .input-group-text i{
+
+form .add-button i {
   font-size: 2em;
 }
-form .form-control{
+
+form .form-control {
   height: 3em;
   font-family: "Raleway";
 }
-form .form-control:focus{
-  box-shadow: 0;
+
+form .form-control:focus {
+  border-color: $primary;
+  box-shadow: none;
 }

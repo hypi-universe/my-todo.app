@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppService } from './app.service';
 
@@ -39,13 +39,29 @@ interface ITodo {
 
         ])) ])
 
+    ]),
+    trigger('slideDown', [
+      state(':show', style({transform: 'translateY(10%)', opacity: 0})),
+      transition('void => *', [
+        // animate('300ms', style({transform: 'translateY(0%)', opacity: 1}))
+        animate('300ms', keyframes([
+          style({opacity: 0, transform: 'translateY(-10%)', offset: 0}),
+          // style({opacity: 1, transform: 'translateY(5%)',  offset: 0.5}),
+          style({opacity: 1, transform: 'translateY(0)', offset: 1.0})
+        ]))
+      ]),
+      transition('* => void', [
+        animate('300ms', style({transform: 'translateY(10%)', opacity: 0})),
+      ]),
     ])
   ]
 })
 export class AppComponent implements OnInit {
   todoArray: ITodo[] = [];
+  foundTodoArray: ITodo[] = [];
 
   public form: FormGroup;
+  public searchForm: FormGroup;
 
   constructor(private fb: FormBuilder, private appService: AppService) {
   }
@@ -60,6 +76,9 @@ export class AppComponent implements OnInit {
 
 
   constructForm() {
+    this.searchForm = this.fb.group({
+      searchInput: this.fb.control(null, Validators.nullValidator),
+    });
     this.form = this.fb.group({
       todo: this.fb.control(null, Validators.required),
       description: this.fb.control(null, Validators.required)
@@ -94,5 +113,18 @@ export class AppComponent implements OnInit {
     todo.description = value;
     // this.todoArray.find()
     console.log(todo);
+  }
+
+  getTodo(value: string) {
+    console.log(value);
+    this.todoArray.filter(
+      (todo: ITodo) => {
+        if (todo.name.toLowerCase() === value.toLowerCase()) {
+          this.foundTodoArray = [];
+          this.foundTodoArray.push(todo);
+          return;
+        }
+      }
+    );
   }
 }

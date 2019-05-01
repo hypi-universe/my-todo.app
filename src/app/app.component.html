@@ -1,43 +1,91 @@
-<div class="container">
-  <form [formGroup]="form" (submit)="onSubmit()">
-    <div class="form-group">
-      <h1 class="text-center ">
-        <span>Todo App</span>
-        <span class="badge badge-info" *ngIf="todoArray.length">{{todoArray.length}}</span>
-      </h1>
-      <div class="input-group-prepend flex-column">
+<div class="container-fluid">
+  <div class="row mt-5">
+    <div class="col-12"><h1 class="text-center ">
+      <span>Todo App</span>
+    </h1></div>
+  </div>
+  <div class="row">
+    <div class="col-4">
+      <form [formGroup]="form" (submit)="onSubmit()">
         <div class="form-group">
-          <label for="todoName" class="font-weight-bold">Todo Name</label>
-          <input [formControlName]="'todo'" id="todoName" type="text" class="form-control" placeholder="Name"
-                 name="todo">
+          <h1 class="text-center ">
+            <span>Create Todo</span>
+          </h1>
+          <div class="input-group-prepend flex-column">
+            <div class="form-group">
+              <label for="todoName" class="font-weight-bold">Todo Name</label>
+              <input [formControlName]="'todo'" id="todoName" type="text" class="form-control" placeholder="Name"
+                     name="todo">
+            </div>
+            <div class="form-group">
+              <label for="todoDescription" class="font-weight-bold">Description</label>
+              <textarea [formControlName]="'description'" id="todoDescription" type="text"
+                        class="form-control form-control-lg m-h15" placeholder="Description"
+                        name="todo"></textarea>
+            </div>
+            <button class="add-button" (click)="onSubmit()">
+              <i class="fal fa-plus"></i>
+            </button>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="todoDescription" class="font-weight-bold">Description</label>
-          <input [formControlName]="'description'" id="todoDescription" type="text" class="form-control form-control-lg"
-                 placeholder="Description" name="todo">
+      </form>
+    </div>
+    <div class="col-4">
+      <div class="all-todo">
+        <h1 class="text-center ">
+          <span>Todo list</span>
+          <span class="badge badge-info" *ngIf="todoArray.length">{{todoArray.length}}</span>
+        </h1>
+        <div class="data">
+          <ul class="list-unstyled">
+            <li class="text-center" *ngIf="todoArray.length === 0" [@slideDown]>No items on your list</li>
+            <li [@slideDown] *ngFor="let todo of todoArray; let i = index" class="card p-1 mb-1">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title d-flex align-items-center">
+                  <span class="flex-grow-1">{{todo.name}}</span>
+                  <i class="far fa-edit m-1" *ngIf="!todo.editable" (click)=" onEdit(todo, i)"></i>
+                  <i class="far fa-save m-1" *ngIf="todo.editable" (click)="onSave(todo,todoDescription.value)"></i>
+                  <i class="fas fa-times-circle" (click)="onDeleteItem(i)"></i>
+                </h5>
+
+                <textarea [class.border-transparent]="!todo.editable" class="card-text form-control form-control-lg"
+                          [readOnly]="!todo.editable"
+                          value="{{todo.description}}" #todoDescription></textarea>
+                <p class="card-text">{{todo.hypi?.created | date:'short'}}</p>
+              </div>
+          </ul>
         </div>
-        <button class="add-button" (click)="onSubmit()">
-          <i class="fal fa-plus"></i>
-        </button>
       </div>
     </div>
-    <div class="data">
-      <ul class="list-unstyled">
-        <li [@moveInLeft] *ngFor="let todo of todoArray; let i = index" class="card p-1">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title d-flex align-items-center">
-              <span class="flex-grow-1">{{todo.name}}</span>
-              <i class="far fa-edit m-1" *ngIf="!todo.editable" (click)=" onEdit(todo, i)"></i>
-              <i class="far fa-save m-1" *ngIf="todo.editable" (click)="onSave(todo,todoDescription.value)"></i>
-              <i class="fas fa-times-circle" (click)="onDeleteItem(i)"></i>
-            </h5>
+    <div class="col-4">
+      <form [formGroup]="searchForm">
+        <h1>Search</h1>
+        <div class="form-group">
+          <input [formControlName]="'searchInput'" (keyup)="getTodo(searchInput.value)"
+                 type="text" class="form-control form-control-lg" placeholder="Search..."
+                 #searchInput name="todo">
+        </div>
 
-            <textarea class="card-text form-control" [readOnly]="!todo.editable" value="{{todo.description}}"
-                      #todoDescription></textarea>
-            <p class="card-text">{{todo.hypi?.created | date:'short'}}</p>
-          </div>
-      </ul>
+        <div class="data">
+          <ul class="list-unstyled">
+            <li [@slideDown] *ngFor="let todo of foundTodoArray; let i = index" class="card p-1 mb-1">
+              <div class="card-body d-flex flex-column">
+                <h5 class="card-title d-flex align-items-center">
+                  <span class="flex-grow-1">{{todo.name}}</span>
+                  <i class="far fa-edit m-1" *ngIf="!todo.editable" (click)=" onEdit(todo, i)"></i>
+                  <i class="far fa-save m-1" *ngIf="todo.editable" (click)="onSave(todo,todoDescription.value)"></i>
+                  <i class="fas fa-times-circle" (click)="onDeleteItem(i)"></i>
+                </h5>
+
+                <textarea [class.border-transparent]="!todo.editable" class="card-text form-control form-control-lg"
+                          [readOnly]="!todo.editable"
+                          value="{{todo.description}}" #todoDescription></textarea>
+                <p class="card-text">{{todo.hypi?.created | date:'short'}}</p>
+              </div>
+          </ul>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>
 

@@ -30,7 +30,7 @@ export function createApollo(httpLink: HttpLink) {
   const authMiddleware = new ApolloLink((operation, forward) => {
     operation.setContext({ // add the authorization to the headers
       headers: {
-        'hypi-domain': 'latest.store.hypi.hypi.app',
+        'hypi-domain': 'latest.todo.hypi.hypi.app',
         'Authorization': token,
       }
     });

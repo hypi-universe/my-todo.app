@@ -21,7 +21,7 @@ export class AppService {
   findTodos(todo = 'hypi') {
     return this.apollo.watchQuery({
       query: findRealm,
-      pollInterval: 500,
+      pollInterval: 2000,
       variables: {
         arcql: `name = '${todo}' `
       }
